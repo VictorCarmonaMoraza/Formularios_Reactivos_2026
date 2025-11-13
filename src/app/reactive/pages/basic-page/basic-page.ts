@@ -17,7 +17,7 @@ export class BasicPage {
   basicForm: FormGroup = this.fb.group({
     name: ['',/**Validadores sincronos */[Validators.required, Validators.minLength(3)],/**Validadores asincronos */[]],
     price: [0, [Validators.required, Validators.min(10)]],
-    inStorage: [0, [Validators.required, Validators.minLength(0)]],
+    inStorage: [0, [Validators.required, Validators.min(0)]],
   })
 
   //Fomra 2 de formularios
@@ -28,7 +28,8 @@ export class BasicPage {
   // })
 
   isValdField(fieldname: string): boolean | null {
-    return !!this.basicForm.controls[fieldname].errors
+    //verificamos que el campo tenga errores y que haya sido tocado
+    return (this.basicForm.controls[fieldname].errors && this.basicForm.controls[fieldname].touched)
   }
 
   getFieldErrors(fieldname: string): string | null {
@@ -48,5 +49,22 @@ export class BasicPage {
       }
     }
     return null;
+  }
+
+  //Metodo para guardar el formulario
+  onSave() {
+    if (this.basicForm.invalid) {
+      //Si el formulario no es valido,
+      //marcamos todos los campos como tocados para que se muestren los errores
+      this.basicForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.basicForm.value);
+    //Reseteamos el formulario con valores por defecto
+    this.basicForm.reset({
+      name: "Victor",
+      price: 100,
+      inStorage: 50
+    })
   }
 }

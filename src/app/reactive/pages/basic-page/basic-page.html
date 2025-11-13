@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col">
 
-    <form autocomplete="off" [formGroup]="basicForm">
+    <form autocomplete="off" [formGroup]="basicForm" (ngSubmit)="onSave()">
 
       <!-- Campo de producto -->
       <div class="mb-3 row">
@@ -14,21 +14,22 @@
           <input type="text" class="form-control" placeholder="Nombre del producto" formControlName="name">
           @if (isValdField('name')) {
           <span class="form-text text-danger">
-            <!-- Debe de ser de 3 letras -->
             {{getFieldErrors('name')}}
           </span>
           }
         </div>
       </div>
 
-      <!-- Campo de producto -->
+      <!-- Campo de Precio -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Precio</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" placeholder="Precio del producto" formControlName="price">
+          @if (isValdField('price')) {
           <span class="form-text text-danger">
-            El precio debe de ser 0 o mayor
+            {{getFieldErrors('price')}}
           </span>
+          }
         </div>
       </div>
 
@@ -37,10 +38,11 @@
         <label class="col-sm-3 col-form-label">Existencias</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" placeholder="Existencias del producto" formControlName="inStorage">
-
+          @if (isValdField('inStorage')) {
           <span class="form-text text-danger">
-            Las existencias deben de ser 0 o mayor
+            {{getFieldErrors('inStorage')}}
           </span>
+          }
         </div>
       </div>
 
