@@ -12,11 +12,12 @@
         <div class="col-sm-9">
 
           <input type="text" class="form-control" placeholder="Nombre del producto" formControlName="name">
-
+          @if (isValdField('name')) {
           <span class="form-text text-danger">
             <!-- Debe de ser de 3 letras -->
-            error message
+            {{getFieldErrors('name')}}
           </span>
+          }
         </div>
       </div>
 
@@ -82,16 +83,16 @@
     <pre>{{ basicForm.errors | json }}</pre>
 
     <span>Errores del campo name</span>
-    <pre>{{ basicForm.controls.name.errors | json }}</pre>
+    <pre>{{ basicForm.controls['name'].errors | json }}</pre>
 
     <span>Errores del campo price</span>
-    <pre>{{ basicForm.controls.price.errors | json }}</pre>
+    <pre>{{ basicForm.controls['price'].errors | json }}</pre>
 
     <span>Errores del campo inStorage</span>
-    <pre>{{ basicForm.controls.inStorage.errors | json }}</pre>
+    <pre>{{ basicForm.controls['inStorage'].errors | json }}</pre>
 
     <span>Precio</span>
-    <pre>{{ basicForm.controls.price.value | json }}</pre>
+    <pre>{{ basicForm.controls['price'].value | json }}</pre>
 
     <!--Forma 2 de ver los errores de los campos-->
 
@@ -101,6 +102,6 @@
     <pre>InStorage->{{ basicForm.controls['inStorage'].value | json }}</pre>
 
     <span>Producto</span>
-    <pre>{{ basicForm.controls.name.value | json }}</pre>
+    <pre>{{ basicForm.controls['name'].value | json }}</pre>
   </div>
 </div>
