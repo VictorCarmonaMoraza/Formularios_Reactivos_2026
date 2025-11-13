@@ -1,10 +1,10 @@
 import { Routes } from "@angular/router";
-import { BasicPage } from "./basic-page/basic-page";
-import { DynamicPage } from "./dynamic-page/dynamic-page";
-import { SwitchesPage } from "./switches-page/switches-page";
+import { BasicPage } from "./pages/basic-page/basic-page";
+import { DynamicPage } from "./pages/dynamic-page/dynamic-page";
+import { SwitchesPage } from "./pages/switches-page/switches-page";
 
 
-export const authRoutes: Routes = [
+export const reactiveRoutes: Routes = [
   {
     path: '',
     children: [

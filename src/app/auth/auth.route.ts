@@ -7,7 +7,8 @@ export const authRoutes: Routes = [
     children: [
       { path: 'sign-up', component: RegisterPage },
       { path: '**', redirectTo: 'sign-up' }
-
     ]
   }
 ]
+
+export default authRoutes;
