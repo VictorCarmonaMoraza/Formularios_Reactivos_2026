@@ -12,9 +12,9 @@
         <div class="col-sm-9">
 
           <input type="text" class="form-control" placeholder="Nombre del producto" formControlName="name">
-          @if (isValdField('name')) {
+          @if (formUtils.isValdField(basicForm, 'name')) {
           <span class="form-text text-danger">
-            {{getFieldErrors('name')}}
+            {{formUtils.getFieldErrors(basicForm,'name')}}
           </span>
           }
         </div>
@@ -25,9 +25,9 @@
         <label class="col-sm-3 col-form-label">Precio</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" placeholder="Precio del producto" formControlName="price">
-          @if (isValdField('price')) {
+          @if (formUtils.isValdField(basicForm,'price')) {
           <span class="form-text text-danger">
-            {{getFieldErrors('price')}}
+            {{formUtils.getFieldErrors(basicForm,'price')}}
           </span>
           }
         </div>
@@ -38,9 +38,9 @@
         <label class="col-sm-3 col-form-label">Existencias</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" placeholder="Existencias del producto" formControlName="inStorage">
-          @if (isValdField('inStorage')) {
+          @if (formUtils.isValdField(basicForm,'inStorage')) {
           <span class="form-text text-danger">
-            {{getFieldErrors('inStorage')}}
+            {{formUtils.getFieldErrors(basicForm,'inStorage')}}
           </span>
           }
         </div>

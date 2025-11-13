@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
   selector: 'app-basic-page',
@@ -12,6 +13,7 @@ export class BasicPage {
 
   //private  para que no se pueda modificar desde fuera de la clase
   private fb = inject(FormBuilder);
+  formUtils = FormUtils;
 
   //Forma 1 de formularios (RECOMENDADA)
   basicForm: FormGroup = this.fb.group({
@@ -27,29 +29,30 @@ export class BasicPage {
   //   inStorage: new FormControl(0),
   // })
 
-  isValdField(fieldname: string): boolean | null {
-    //verificamos que el campo tenga errores y que haya sido tocado
-    return (this.basicForm.controls[fieldname].errors && this.basicForm.controls[fieldname].touched)
-  }
+  //comentado porque se saco a fichero externo
+  // isValdField(fieldname: string): boolean | null {
+  //   //verificamos que el campo tenga errores y que haya sido tocado
+  //   return (this.basicForm.controls[fieldname].errors && this.basicForm.controls[fieldname].touched)
+  // }
 
-  getFieldErrors(fieldname: string): string | null {
-    //Verificamos que el campo exista
-    if (!this.basicForm.controls[fieldname]) return null;
+  // getFieldErrors(fieldname: string): string | null {
+  //   //Verificamos que el campo exista
+  //   if (!this.basicForm.controls[fieldname]) return null;
 
-    const errors = this.basicForm.controls[fieldname].errors ?? {};
+  //   const errors = this.basicForm.controls[fieldname].errors ?? {};
 
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'Este campo es requerido';
-        case 'minlength':
-          return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
-        case 'min':
-          return `El valor mínimo es ${errors['min'].min}`;
-      }
-    }
-    return null;
-  }
+  //   for (const key of Object.keys(errors)) {
+  //     switch (key) {
+  //       case 'required':
+  //         return 'Este campo es requerido';
+  //       case 'minlength':
+  //         return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+  //       case 'min':
+  //         return `El valor mínimo es ${errors['min'].min}`;
+  //     }
+  //   }
+  //   return null;
+  // }
 
   //Metodo para guardar el formulario
   onSave() {
