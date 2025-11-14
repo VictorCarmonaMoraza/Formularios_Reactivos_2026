@@ -1,6 +1,21 @@
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormGroup, ValidationErrors } from '@angular/forms';
 //Crearemos metodo estaticos
 export class FormUtils {
+
+
+  static getTextError(errors: ValidationErrors) {
+    for (const key of Object.keys(errors)) {
+      switch (key) {
+        case 'required':
+          return 'Este campo es requerido';
+        case 'minlength':
+          return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+        case 'min':
+          return `El valor mínimo es ${errors['min'].min}`;
+      }
+    }
+    return null;
+  }
 
   static isValdField(form: FormGroup, fieldname: string): boolean | null {
     //verificamos que el campo tenga errores y que haya sido tocado
@@ -13,16 +28,20 @@ export class FormUtils {
 
     const errors = form.controls[fieldname].errors ?? {};
 
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'Este campo es requerido';
-        case 'minlength':
-          return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
-        case 'min':
-          return `El valor mínimo es ${errors['min'].min}`;
-      }
-    }
-    return null;
+    return FormUtils.getTextError(errors)
+  }
+
+  static isValidFielArray(formArray: FormArray, index: number) {
+    return (formArray.controls[index].errors && formArray.controls[index].touched);
+  }
+
+  static getFieldErrorInArray(formArray: FormArray, index: number): string | null {
+    //Verificamos que el campo exista
+    if (formArray.controls.length == 0) return null;
+
+    const errors = formArray.controls[index].errors ?? {};
+
+    return FormUtils.getTextError(errors)
+
   }
 }
