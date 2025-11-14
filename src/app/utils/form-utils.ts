@@ -2,8 +2,20 @@ import { FormArray, FormGroup, ValidationErrors } from '@angular/forms';
 //Crearemos metodo estaticos
 export class FormUtils {
 
+  //Expresiones regulares para validaciones
+  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+  static passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$';
+
 
   static getTextError(errors: ValidationErrors) {
+
+    console.log(errors);
+
+    //
+
+
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
@@ -14,6 +26,13 @@ export class FormUtils {
           return `El valor mínimo es ${errors['min'].min}`;
         case 'email':
           return `El valor ingresado no es un correo electronico válido`;
+        case 'pattern':
+          if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
+            return 'El valor ingresado no luce como un correo electrónico válido';
+          }
+          return 'Error de patron contra expresion regular';
+        default:
+          return 'Error de validacion no controlado';
       }
     }
     return null;

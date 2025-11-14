@@ -13,7 +13,8 @@
           <input type="text" class="form-control" placeholder="Nombre del usuario" formControlName="name">
           @if(formUtils.isValdField(registerForm,'name')){
           <span class="form-text text-danger">
-            {{formUtils.getFieldErrors(registerForm,'name')}}
+            El campo debe de tener nombre y apellido
+            <!-- {{formUtils.getFieldErrors(registerForm,'name')}} -->
           </span>
           }
         </div>
