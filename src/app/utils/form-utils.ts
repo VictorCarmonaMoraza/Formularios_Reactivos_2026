@@ -1,4 +1,14 @@
 import { AbstractControl, FormArray, FormGroup, ValidationErrors } from '@angular/forms';
+
+async function sleep() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(true);
+    }, 2500);
+  })
+}
+
+
 //Crearemos metodo estaticos
 export class FormUtils {
 
@@ -26,6 +36,8 @@ export class FormUtils {
           return `El valor mínimo es ${errors['min'].min}`;
         case 'email':
           return `El valor ingresado no es un correo electronico válido`;
+        case 'emailTaken':
+          return 'El correo electrónico ya está en uso';
         case 'pattern':
           if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
             return 'El valor ingresado no luce como un correo electrónico válido';
@@ -78,6 +90,19 @@ export class FormUtils {
         passwordsNotEqual: true
       }
     }
+  }
+
+  static async checkingServerResponse(control: AbstractControl): Promise<ValidationErrors | null> {
+    console.log('Checking server response...');
+    await sleep(); //SE espera dos segundos y medio
+
+    const formValue = control.value;
+    if (formValue === 'hola@mundo.com') {
+      return {
+        emailTaken: true,
+      };
+    }
+    return null
   }
 
 }
