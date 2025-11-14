@@ -77,12 +77,18 @@
 
       <div class="row">
         <div class="col">
+
+          @if(registerForm.errors && registerForm.touched){
+          <span class="form-text text-danger">
+            Las contraseñas no coinciden
+          </span>
+          }
+
           <button class="btn btn-primary float-end" type="submit">
             Crear
           </button>
         </div>
       </div>
-
 
     </form>
   </div>
