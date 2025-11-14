@@ -20,12 +20,7 @@ export class FormUtils {
 
 
   static getTextError(errors: ValidationErrors) {
-
     console.log(errors);
-
-    //
-
-
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
@@ -38,6 +33,8 @@ export class FormUtils {
           return `El valor ingresado no es un correo electronico válido`;
         case 'emailTaken':
           return 'El correo electrónico ya está en uso';
+        case 'notStrider':
+          return 'No se puede usar el username de "strider" en la aplicación';
         case 'pattern':
           if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
             return 'El valor ingresado no luce como un correo electrónico válido';
@@ -103,6 +100,13 @@ export class FormUtils {
       };
     }
     return null
+  }
+
+  static notStrider(control: AbstractControl): ValidationErrors | null {
+
+    const formValue = control.value;
+    return formValue === 'strider' ? { notStrider: true } : null;
+
   }
 
 }

@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
@@ -18,7 +18,7 @@ export class RegisterPage {
     email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)],
     /**validaciones asincronas */[FormUtils.checkingServerResponse]],
     username: ['', [Validators.required, Validators.minLength(6),
-    Validators.pattern(FormUtils.notOnlySpacesPattern)]],
+    Validators.pattern(FormUtils.notOnlySpacesPattern), FormUtils.notStrider]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     password2: ['', Validators.required],
 
