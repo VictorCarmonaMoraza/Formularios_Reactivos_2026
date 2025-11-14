@@ -31,16 +31,19 @@ export class FormUtils {
     return FormUtils.getTextError(errors)
   }
 
+  //Valida si los cmapos del formArray no tienen errores y han sido tocados
   static isValidFielArray(formArray: FormArray, index: number) {
     return (formArray.controls[index].errors && formArray.controls[index].touched);
   }
 
+  //Obtiene los errores de un campo dentro de un FormArray
   static getFieldErrorInArray(formArray: FormArray, index: number): string | null {
     //Verificamos que el campo exista
     if (formArray.controls.length == 0) return null;
 
     const errors = formArray.controls[index].errors ?? {};
 
+    //Metodo utilizado para obtener los errores de un campo
     return FormUtils.getTextError(errors)
 
   }

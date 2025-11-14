@@ -1,7 +1,7 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off" [formGroup]="dynamicForm">
+<form autocomplete="off" [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
 
   <!-- Nombre -->
   <div class="mb-3 row">
@@ -23,7 +23,8 @@
     <div class="col-sm-9">
 
       <div class="input-group">
-        <input class="form-control" placeholder="Agregar favorito">
+        <input class="form-control" placeholder="Agregar favorito" [formControl]=" newFavorite"
+          (keydown.enter)="onAddToFavorites()">
 
 
         <button class="btn btn-outline-primary" type="button">
@@ -45,7 +46,7 @@
         <div class="input-group">
           <input class="form-control" [formControlName]="i" />
 
-          <button class="btn btn-outline-danger" type="button">
+          <button class="btn btn-outline-danger" type="button" (click)="onRemoveFavorite(i)">
             Eliminar
           </button>
         </div>
@@ -58,6 +59,11 @@
       </div>
       }
 
+      @if(formUtils.isValdField(dynamicForm,'favoritesGames')) {
+      <span class="form-text text-danger">
+        debe de tener al menos dos juegos
+      </span>
+      }
     </div>
   </div>
 
@@ -65,8 +71,7 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <button type="submit" class="btn btn-primary float-end">
-        <!-- [disabled]="myForm.invalid" -->
+      <button type="submit" class="btn btn-primary float-end" [disabled]="dynamicForm.invalid">
         Guardar
       </button>
     </div>
@@ -86,5 +91,5 @@
 <br>
 
 <span>Agregar Juego</span>
-<!-- <pre>{{ 'object' | json }}</pre>
-<pre>{{ 'object' | json }}</pre> -->
+<pre>{{ dynamicForm.controls['favoritesGames'].errors | json }}</pre>
+<pre>{{ dynamicForm.controls['favoritesGames'].value | json }}</pre>
