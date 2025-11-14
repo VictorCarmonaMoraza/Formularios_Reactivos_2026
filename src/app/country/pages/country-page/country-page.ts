@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { JsonPipe } from '@angular/common';
 import { CountryService } from '../../services/country-service';
 import { Country } from '../../interfaces/country-interface';
-import { switchMap, tap } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-country-page',
@@ -27,13 +27,16 @@ export class CountryPage {
 
   onFormChanged = effect((onCleanup) => {
     const regionSubscription = this.onRegionChanged();
+    const countrySubscription = this.onCountryChanged();
 
     onCleanup(() => {
       regionSubscription.unsubscribe();
+      countrySubscription.unsubscribe();
       console.log('Limpiado')
     })
   });
 
+  //Cuando cambia el valor de region
   onRegionChanged() {
     return this.countryForm.get('region')!.valueChanges
       .pipe(
@@ -47,7 +50,29 @@ export class CountryPage {
       )
       .subscribe(countries => {
         console.log(countries);
+        //Ordenamos los paises por nombre
+        countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        //respuesta
         this.countryByRegion.set(countries);
+      });
+  }
+
+  //Cuando el country cambia
+  onCountryChanged() {
+    return this.countryForm.get('country')!.valueChanges
+      .pipe(
+        //Limpiamos los border
+        tap(() => this.countryForm.get('border')!.setValue('')),
+        //Filtramos los valores nulos o vacios
+        filter((value) => value!.length > 0),
+        switchMap(alphaCode => this.countryService.getCountryByAlphaCode(alphaCode ?? '')),
+        switchMap(country => this.countryService.getCountrieNamesByCodeArray(country.borders))
+      )
+      .subscribe(borders => {
+        console.log(borders);
+        //Ordenamos los borders por nombre
+        borders.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        this.borders.set(borders);
       });
   }
 
